@@ -1,3 +1,3 @@
-# Plonkit
+# AZK (Accelerated Zero Knowledge)
 
-A modern and concise PLONK implementation in Rust
+Accelerated zero knowledge infrastructure, optimized for modern hardware.
