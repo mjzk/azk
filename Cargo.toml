@@ -124,9 +124,15 @@ ark-bls12-381 = { version = "^0.4.0", default-features = false, features = [
 ark-bls12-377 = { version = "^0.4.0", default-features = false, features = [
     "curve",
 ] }
+ark-bn254 = { version = "^0.4.0", default-features = false, features = [
+    "curve",
+] }
 ark-poly-commit = { git = "https://github.com/mjzk/poly-commit.git" }
 rand = "0.8"
 criterion = "0.5"
+serde = "1.0"
+rayon = "1.10"
+thiserror = "1.0"
 
 [patch.crates-io]
 ark-ff = { git = "https://github.com/arkworks-rs/algebra/" }
