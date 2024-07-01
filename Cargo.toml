@@ -1,17 +1,14 @@
-cargo-features = ["edition2024"]
-
 [workspace.package]
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 license = "MIT OR Apache-2.0"
 homepage = "https://github.com/mjzk/azk"
 repository = "https://github.com/mjzk/azk"
 exclude = [".github/"]
 
 [workspace]
-members = [
-    "crates/kzg",
-]
+resolver = "2"
+members = ["crates/kzg"]
 
 [workspace.lints.rust]
 missing_debug_implementations = "warn"
@@ -110,5 +107,31 @@ codegen-units = 1
 incremental = false
 
 [workspace.dependencies]
+ark-serialize = { version = "^0.4.0", default-features = false, features = [
+    "derive",
+] }
+ark-ff = { version = "^0.4.0", default-features = false }
+ark-ec = { version = "^0.4.0", default-features = false }
+ark-poly = { version = "^0.4.0", default-features = false }
+ark-crypto-primitives = { version = "^0.4.0", default-features = false, features = [
+    "sponge",
+    "merkle_tree",
+] }
+ark-std = { version = "^0.4.0", default-features = false }
+ark-bls12-381 = { version = "^0.4.0", default-features = false, features = [
+    "curve",
+] }
+ark-bls12-377 = { version = "^0.4.0", default-features = false, features = [
+    "curve",
+] }
+ark-poly-commit = { git = "https://github.com/mjzk/poly-commit.git" }
+rand = "0.8"
+criterion = "0.5"
 
-
+[patch.crates-io]
+ark-ff = { git = "https://github.com/arkworks-rs/algebra/" }
+ark-ec = { git = "https://github.com/arkworks-rs/algebra/" }
+ark-serialize = { git = "https://github.com/arkworks-rs/algebra/" }
+ark-crypto-primitives = { git = "https://github.com/arkworks-rs/crypto-primitives" }
+ark-bls12-377 = { git = "https://github.com/arkworks-rs/curves/" }
+ark-bls12-381 = { git = "https://github.com/arkworks-rs/curves/" }

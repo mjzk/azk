@@ -1,4 +1,22 @@
 [package]
 name = "kzg"
+edition.workspace = true
 
 [dependencies]
+
+
+[dev-dependencies]
+criterion.workspace = true
+ark-std.workspace = true
+ark-ec.workspace = true
+ark-poly.workspace = true
+ark-bls12-381.workspace = true
+ark-bls12-377.workspace = true
+ark-poly-commit.workspace = true
+ark-ff.workspace = true
+rand.workspace = true
+ark-crypto-primitives.workspace = true
+
+[[bench]]
+name = "bench_ark"
+harness = false
