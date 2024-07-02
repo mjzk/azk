@@ -8,3 +8,7 @@ Accelerated zero knowledge infrastructure, optimized for modern hardware.
     - [x] KZG Baseline
     - [ ] EIP-4844 optimization
 - [ ] Plonk
+
+## Acknowledgements and References
+
+* [Arkworks libraries](https://github.com/arkworks-rs)
