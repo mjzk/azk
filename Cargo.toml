@@ -130,14 +130,19 @@ ark-bn254 = { version = "^0.4.0", default-features = false, features = [
 ark-poly-commit = { git = "https://github.com/mjzk/poly-commit.git" }
 rand = "0.8"
 criterion = "0.5"
-serde = "1.0"
+serde = { version = "1.0", default-features = false, features = [
+    "alloc",
+    "derive",
+] }
 rayon = "1.10"
 thiserror = "1.0"
 
 [patch.crates-io]
+ark-std = { git = "https://github.com/arkworks-rs/std/" }
 ark-ff = { git = "https://github.com/arkworks-rs/algebra/" }
 ark-ec = { git = "https://github.com/arkworks-rs/algebra/" }
 ark-serialize = { git = "https://github.com/arkworks-rs/algebra/" }
 ark-crypto-primitives = { git = "https://github.com/arkworks-rs/crypto-primitives" }
 ark-bls12-377 = { git = "https://github.com/arkworks-rs/curves/" }
 ark-bls12-381 = { git = "https://github.com/arkworks-rs/curves/" }
+ark-bn254 = { git = "https://github.com/arkworks-rs/curves/" }

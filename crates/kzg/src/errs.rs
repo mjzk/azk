@@ -8,6 +8,8 @@ pub enum KZGError {
     WrappingIOError(#[from] std::io::Error),
     #[error("Deserialization error")]
     DeserializationError,
+    #[error("Serialization error")]
+    SerializationError,
     #[error("Degree error")]
     DegreeError,
     #[error("PCS prove eval error")]
