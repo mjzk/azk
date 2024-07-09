@@ -238,7 +238,7 @@ impl<P: Pairing> KZGCommitmentScheme<P> {
 /// KZG commitment scheme over the BN254 curve
 pub type KZGCommitmentSchemeBN254 = KZGCommitmentScheme<Bn254>;
 
-impl<'b> PolyComScheme for KZGCommitmentSchemeBN254 {
+impl PolyComScheme for KZGCommitmentSchemeBN254 {
     type Field = Fr;
     type Commitment = KZGCommitment<G1Projective>;
 
@@ -258,7 +258,7 @@ impl<'b> PolyComScheme for KZGCommitmentSchemeBN254 {
         let points_raw =
             G1Projective::normalize_batch(&self.public_parameter_group_1[0..degree + 1]);
 
-        let commitment_value = G1Projective::msm(&points_raw, &coefs).unwrap();
+        let commitment_value = G1Projective::msm(&points_raw, coefs).unwrap();
 
         Ok(KZGCommitment(commitment_value))
     }
@@ -273,12 +273,12 @@ impl<'b> PolyComScheme for KZGCommitmentSchemeBN254 {
         blinds: &[Self::Field],
         zeroing_degree: usize,
     ) -> Self::Commitment {
-        let mut commitment = commitment.0.clone();
+        let mut commitment = commitment.0;
         for (i, blind) in blinds.iter().enumerate() {
-            let mut blind = blind.clone();
-            commitment = commitment + &(self.public_parameter_group_1[i] * &blind);
+            let mut blind = *blind;
+            commitment += &(self.public_parameter_group_1[i] * blind);
             blind = blind.neg();
-            commitment = commitment + &(self.public_parameter_group_1[zeroing_degree + i] * &blind);
+            commitment += &(self.public_parameter_group_1[zeroing_degree + i] * blind);
         }
         KZGCommitment(commitment)
     }
@@ -320,19 +320,19 @@ impl<'b> PolyComScheme for KZGCommitmentSchemeBN254 {
         eval: &Self::Field,
         proof: &Self::Commitment,
     ) -> KZGResult<()> {
-        let g1_0 = self.public_parameter_group_1[0].clone();
-        let g2_0 = self.public_parameter_group_2[0].clone();
-        let g2_1 = self.public_parameter_group_2[1].clone();
+        let g1_0 = self.public_parameter_group_1[0];
+        let g2_0 = self.public_parameter_group_2[0];
+        let g2_1 = self.public_parameter_group_2[1];
 
         let x_minus_point_group_element_group_2 = &g2_1.sub(&g2_0.mul(point));
 
         let left_pairing_eval = if eval.is_zero() {
-            Bn254::pairing(&cm.0, &g2_0)
+            Bn254::pairing(cm.0, g2_0)
         } else {
-            Bn254::pairing(&cm.0.sub(&g1_0.mul(eval)), &g2_0)
+            Bn254::pairing(cm.0.sub(&g1_0.mul(eval)), g2_0)
         };
 
-        let right_pairing_eval = Bn254::pairing(&proof.0, x_minus_point_group_element_group_2);
+        let right_pairing_eval = Bn254::pairing(proof.0, x_minus_point_group_element_group_2);
 
         if left_pairing_eval == right_pairing_eval {
             Ok(())
@@ -343,10 +343,10 @@ impl<'b> PolyComScheme for KZGCommitmentSchemeBN254 {
 
     fn shrink_to_verifier_only(&self) -> KZGResult<Self> {
         Ok(Self {
-            public_parameter_group_1: vec![self.public_parameter_group_1[0].clone()],
+            public_parameter_group_1: vec![self.public_parameter_group_1[0]],
             public_parameter_group_2: vec![
-                self.public_parameter_group_2[0].clone(),
-                self.public_parameter_group_2[1].clone(),
+                self.public_parameter_group_2[0],
+                self.public_parameter_group_2[1],
             ],
         })
     }

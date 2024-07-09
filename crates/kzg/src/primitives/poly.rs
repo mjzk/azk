@@ -172,7 +172,7 @@ impl<F: PrimeField> FpPolynomial<F> {
     /// assert_eq!(poly.degree(), 0)
     /// ```
     pub fn degree(&self) -> usize {
-        if self.coefs.len() == 0 {
+        if self.coefs.is_empty() {
             0
         } else {
             self.coefs.len() - 1
@@ -593,7 +593,7 @@ impl<F: PrimeField> FpPolynomial<F> {
 
     /// Compute the polynomial given its evaluation values and domain.
     pub fn ifft_with_domain<E: EvaluationDomain<F>>(domain: &E, values: &[F]) -> Self {
-        let coefs = domain.ifft(&values);
+        let coefs = domain.ifft(values);
         Self::from_coefs(coefs)
     }
 
