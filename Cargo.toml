@@ -1,6 +1,8 @@
 [workspace.package]
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
+rust-version = "1.85"
+authors = ["MJZK, and all AZK contributors"]
 license = "MIT OR Apache-2.0"
 homepage = "https://github.com/mjzk/azk"
 repository = "https://github.com/mjzk/azk"
@@ -8,7 +10,7 @@ exclude = [".github/"]
 
 [workspace]
 resolver = "2"
-members = ["crates/kzg"]
+members = ["crates/primitives"]
 
 [workspace.lints.rust]
 missing_debug_implementations = "warn"
@@ -88,7 +90,7 @@ significant_drop_tightening = "allow"
 
 # Speed up tests.
 [profile.dev.package]
-kzg.opt-level = 3
+primitives.opt-level = 3
 
 [profile.release]
 lto = "thin"
